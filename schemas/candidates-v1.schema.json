@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mcn:catalog:candidates:1",
+  "title": "MCN informational candidate catalog — NOT a release/install manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "kind", "apps"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "kind": {"const": "mcn-candidates"},
+    "apps": {"type": "array", "minItems": 1, "maxItems": 256, "items": {"$ref": "#/$defs/candidate"}}
+  },
+  "$defs": {
+    "candidate": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "name", "status", "installable", "repository", "source_commit", "source_version", "license", "blockers"],
+      "properties": {
+        "id": {"type": "string", "maxLength": 100, "pattern": "^[a-z][a-z0-9-]*(\\.[a-z][a-z0-9-]*){2,5}$"},
+        "name": {"type": "string", "minLength": 1, "maxLength": 80},
+        "status": {"const": "blocked"},
+        "installable": {"const": false},
+        "repository": {"type": "string", "maxLength": 160, "pattern": "^https://github\\.com/[A-Za-z0-9-]+/[A-Za-z0-9._-]+$"},
+        "source_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "source_version": {"type": "string", "minLength": 1, "maxLength": 128},
+        "license": {
+          "type": "object", "additionalProperties": false,
+          "required": ["expression", "scope", "evidence_url"],
+          "properties": {
+            "expression": {"const": "MIT OR Apache-2.0"},
+            "scope": {"const": "source-snapshot-only"},
+            "evidence_url": {"type": "string", "maxLength": 256, "pattern": "^https://github\\.com/[A-Za-z0-9-]+/[A-Za-z0-9._-]+/blob/[0-9a-f]{40}/Cargo\\.toml$"}
+          }
+        },
+        "blockers": {
+          "type": "array", "minItems": 5, "maxItems": 5, "uniqueItems": true,
+          "items": {"enum": ["package-review", "offline-tests", "sandbox-tests", "state-adapter", "owner-release-approval"]}
+        }
+      }
+    }
+  }
+}

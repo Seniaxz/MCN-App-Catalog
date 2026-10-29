@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "kind": "mcn-candidates",
+  "apps": [
+    {
+      "id": "io.github.seniaxz.wordcraft",
+      "name": "WordCraft",
+      "status": "blocked",
+      "installable": false,
+      "repository": "https://github.com/storytold/wordcraft",
+      "source_commit": "aadb077e072b7de05f724e359d8db82e151f125c",
+      "source_version": "0.12.0",
+      "license": {
+        "expression": "MIT OR Apache-2.0",
+        "scope": "source-snapshot-only",
+        "evidence_url": "https://github.com/storytold/wordcraft/blob/aadb077e072b7de05f724e359d8db82e151f125c/Cargo.toml"
+      },
+      "blockers": ["package-review", "offline-tests", "sandbox-tests", "state-adapter", "owner-release-approval"]
+    }
+  ]
+}
